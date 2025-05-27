@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Row, Col, Card, Button } from 'react-bootstrap';
+import { Row, Col, Card, Button, Alert, Spinner } from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getTicketById } from '../services/ticketService';
+import { sendTicketEmail } from '../services/emailService'; // Yeni import
 
 const BookingConfirmationPage = () => {
   const { id } = useParams();
@@ -12,6 +13,11 @@ const BookingConfirmationPage = () => {
   const [ticket, setTicket] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  
+  // Email state'leri
+  const [emailSending, setEmailSending] = useState(false);
+  const [emailSuccess, setEmailSuccess] = useState(false);
+  const [emailError, setEmailError] = useState('');
   
   useEffect(() => {
     const fetchTicket = async () => {
@@ -39,6 +45,28 @@ const BookingConfirmationPage = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
   
+  // Email gönderme fonksiyonu
+  const handleSendEmail = async () => {
+    setEmailSending(true);
+    setEmailError('');
+    setEmailSuccess(false);
+    
+    try {
+      await sendTicketEmail(ticket._id);
+      setEmailSuccess(true);
+      
+      // 3 saniye sonra success mesajını gizle
+      setTimeout(() => {
+        setEmailSuccess(false);
+      }, 3000);
+      
+    } catch (error) {
+      setEmailError(error.message || 'Failed to send email');
+    } finally {
+      setEmailSending(false);
+    }
+  };
+  
   return (
     <>
       <Button 
@@ -61,6 +89,21 @@ const BookingConfirmationPage = () => {
                 Your ticket has been booked successfully!
               </Message>
               
+              {/* Email Status Messages */}
+              {emailSuccess && (
+                <Alert variant="success" className="d-flex align-items-center">
+                  <span className="me-2">✅</span>
+                  E-ticket sent to <strong>{ticket.passenger_email}</strong> successfully!
+                </Alert>
+              )}
+              
+              {emailError && (
+                <Alert variant="danger" className="d-flex align-items-center">
+                  <span className="me-2">❌</span>
+                  Failed to send email: {emailError}
+                </Alert>
+              )}
+              
               <Card className="ticket-info">
                 <div className="ticket-header text-center">
                   <h4>Booking Confirmation</h4>
@@ -73,7 +116,7 @@ const BookingConfirmationPage = () => {
                     </Col>
                     <Col md={6}>
                       <h6>Seat Number</h6>
-                      <p className="fw-bold">{ticket.seat_number}</p>
+                      <p className="fw-bold">{ticket.seat_number || 'Not assigned'}</p>
                     </Col>
                   </Row>
                   
@@ -126,21 +169,56 @@ const BookingConfirmationPage = () => {
               </Card>
               
               <div className="text-center mt-4">
-                <Button 
-                  variant="primary" 
-                  size="lg"
-                  onClick={() => window.print()}
-                  className="me-3"
-                >
-                  Print Ticket
-                </Button>
-                <Button 
-                  variant="outline-primary" 
-                  size="lg"
-                  onClick={() => navigate('/')}
-                >
-                  Book Another Flight
-                </Button>
+                <Row>
+                  <Col md={4} className="mb-2">
+                    <Button 
+                      variant="success" 
+                      size="lg"
+                      onClick={handleSendEmail}
+                      disabled={emailSending}
+                      className="w-100"
+                    >
+                      {emailSending ? (
+                        <>
+                          <Spinner 
+                            as="span" 
+                            animation="border" 
+                            size="sm" 
+                            role="status" 
+                            className="me-2"
+                          />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          📧 Send E-ticket
+                        </>
+                      )}
+                    </Button>
+                  </Col>
+                  
+                  <Col md={4} className="mb-2">
+                    <Button 
+                      variant="primary" 
+                      size="lg"
+                      onClick={() => window.print()}
+                      className="w-100"
+                    >
+                      🖨️ Print Ticket
+                    </Button>
+                  </Col>
+                  
+                  <Col md={4} className="mb-2">
+                    <Button 
+                      variant="outline-primary" 
+                      size="lg"
+                      onClick={() => navigate('/')}
+                      className="w-100"
+                    >
+                      ✈️ Book Another Flight
+                    </Button>
+                  </Col>
+                </Row>
               </div>
             </Col>
           </Row>

@@ -215,12 +215,8 @@ exports.searchFlights = async (req, res) => {
     
     console.log('Found flights:', flights.length); // Debug log
     
-    res.json({
-      success: true,
-      count: flights.length,
-      data: flights,
-      search_params: { from_city, to_city, date }
-    });
+    res.json(flights); // Direkt array döndür
+
     
   } catch (error) {
     console.error('Flight search error:', error); // Debug log

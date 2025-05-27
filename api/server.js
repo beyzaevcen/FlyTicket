@@ -9,6 +9,8 @@ const cityRoutes = require('./routes/cityRoutes');
 const flightRoutes = require('./routes/flightRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const emailRoutes = require('./routes/emailRoutes'); // YENİ EKLENEN
+
 
 const app = express();
 
@@ -27,6 +29,8 @@ app.use('/api/cities', cityRoutes);
 app.use('/api/flights', flightRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/email', emailRoutes); 
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
