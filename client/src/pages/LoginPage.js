@@ -15,7 +15,7 @@ const LoginPage = () => {
   useEffect(() => {
     const adminInfo = localStorage.getItem('adminInfo');
     if (adminInfo) {
-      setSuccess('Zaten giriş yapmışsınız! Dashboard\'a yönlendiriliyorsunuz...');
+      setSuccess('Already logged in! Redirecting to dashboard...');
       setTimeout(() => {
         navigate('/admin/dashboard');
       }, 1000);
@@ -28,19 +28,19 @@ const LoginPage = () => {
       setError('');
       setSuccess('');
       
-      console.log('🚀 Otomatik giriş deneniyor...');
+      console.log('🚀 Attempting auto login...');
       const data = await login('admin', 'admin123');
       
       localStorage.setItem('adminInfo', JSON.stringify(data));
-      setSuccess('✅ Giriş başarılı! Dashboard\'a yönlendiriliyorsunuz...');
+      setSuccess('✅ Login successful! Redirecting to dashboard...');
       
       setTimeout(() => {
         navigate('/admin/dashboard');
       }, 1000);
       
     } catch (error) {
-      console.error('❌ Otomatik giriş hatası:', error);
-      setError(error.response?.data?.message || 'Otomatik giriş başarısız oldu');
+      console.error('❌ Auto login error:', error);
+      setError(error.response?.data?.message || 'Auto login failed');
     } finally {
       setLoading(false);
     }
@@ -54,19 +54,19 @@ const LoginPage = () => {
       setError('');
       setSuccess('');
       
-      console.log('📝 Manuel giriş deneniyor:', { username, password });
+      console.log('📝 Attempting manual login:', { username, password });
       const data = await login(username, password);
       
       localStorage.setItem('adminInfo', JSON.stringify(data));
-      setSuccess('✅ Giriş başarılı! Dashboard\'a yönlendiriliyorsunuz...');
+      setSuccess('✅ Login successful! Redirecting to dashboard...');
       
       setTimeout(() => {
         navigate('/admin/dashboard');
       }, 1000);
       
     } catch (error) {
-      console.error('❌ Manuel giriş hatası:', error);
-      setError(error.response?.data?.message || 'Giriş başarısız oldu');
+      console.error('❌ Manual login error:', error);
+      setError(error.response?.data?.message || 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -92,7 +92,7 @@ const LoginPage = () => {
               </Alert>
             )}
             
-            {/* Hızlı Giriş Butonu */}
+            {/* Quick Login Button */}
             <div className="mb-3 text-center">
               <Button 
                 variant="success" 
@@ -101,12 +101,12 @@ const LoginPage = () => {
                 className="w-100"
                 size="lg"
               >
-                {loading ? '⏳ Giriş Yapılıyor...' : '🚀 Hızlı Giriş (Admin)'}
+                {loading ? '⏳ Logging in...' : '🚀 Quick Login (Admin)'}
               </Button>
             </div>
             
             <hr />
-            <p className="text-center text-muted mb-3">veya manuel giriş yapın</p>
+            <p className="text-center text-muted mb-3">or login manually</p>
             
             <Form onSubmit={submitHandler}>
               <Form.Group className="mb-3" controlId="username">
@@ -139,13 +139,13 @@ const LoginPage = () => {
                 className="w-100"
                 disabled={loading}
               >
-                {loading ? '⏳ Giriş Yapılıyor...' : '📝 Manuel Giriş'}
+                {loading ? '⏳ Logging in...' : '📝 Manual Login'}
               </Button>
             </Form>
             
             <div className="mt-3 text-center">
               <small className="text-muted">
-                Varsayılan: admin / admin123
+                Default: admin / admin123
               </small>
             </div>
           </Card.Body>

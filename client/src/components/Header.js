@@ -26,7 +26,7 @@ const Header = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               <Nav.Link as={Link} to="/">
-                Ana Sayfa
+                Home Page
               </Nav.Link>
               
               {adminInfo ? (
@@ -35,12 +35,12 @@ const Header = () => {
                     Admin Panel
                   </Nav.Link>
                   <Nav.Link onClick={logoutHandler} style={{ cursor: 'pointer' }}>
-                    Çıkış Yap
+                    Logout
                   </Nav.Link>
                 </>
               ) : (
                 <Nav.Link as={Link} to="/admin/login">
-                  Admin Giriş
+                  Admin Login
                 </Nav.Link>
               )}
             </Nav>
