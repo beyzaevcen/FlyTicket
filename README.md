@@ -13,17 +13,13 @@ A full-stack web application for booking flights with modern features including 
 - [API Endpoints](#api-endpoints)
 - [Project Structure](#project-structure)
 - [Screenshots](#screenshots)
-- [Contributing](#contributing)
 
 ## ✨ Features
 
 ### Core Features
 - 🔍 **Flight Search** - Search flights by origin, destination, and date
 - 🎫 **Flight Booking** - Complete booking process with passenger information
-- 🪑 **Seat Selection** - Interactive seat map with real-time availability
 - 📧 **Email Notifications** - Automated e-ticket delivery via email
-- 📱 **Responsive Design** - Mobile-friendly interface
-- 🖨️ **Ticket Printing** - Print boarding passes directly from browser
 
 ### Admin Features
 - ✈️ **Flight Management** - Create, update, and delete flights
@@ -80,7 +76,7 @@ Before running this project, make sure you have the following installed:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/flyticket.git
+git clone https://github.com/beyzaevcen/flyticket.git
 cd flyticket
 ```
 
@@ -349,16 +345,13 @@ flyticket/
 ## 📸 Screenshots
 
 ### Home Page - Flight Search
-![Flight Search](./screenshots/flight-search.png)
-
-### Seat Selection
-![Seat Selection](./screenshots/seat-selection.png)
+![Flight Search](./screenshots/a.png)
 
 ### Booking Confirmation
-![Booking Confirmation](./screenshots/booking-confirmation.png)
+![Booking Confirmation](./screenshots/b.png)
 
-### Email Ticket
-![Email Ticket](./screenshots/email-ticket.png)
+### Admin Dashboard 
+![Admin Dashboard](./screenshots/c.png)
 
 ## 🧪 Testing
 
@@ -373,147 +366,9 @@ cd frontend
 npm test
 ```
 
-### Manual Testing Checklist
-
-#### User Features
-- [ ] Search flights by route and date
-- [ ] Select seats on flight booking
-- [ ] Complete booking process
-- [ ] Receive email confirmation
-- [ ] Print ticket functionality
-- [ ] Mobile responsiveness
-- [ ] Error handling
-
-#### Admin Features
-- [ ] Admin login/logout functionality
-- [ ] Create new flights with validation
-- [ ] Update existing flight details
-- [ ] Delete flights (with booking checks)
-- [ ] Add new cities/destinations
-- [ ] View all bookings and statistics
-- [ ] Flight conflict prevention
-- [ ] Duplicate flight detection
-
-#### Business Rules Testing
-- [ ] Cannot create overlapping flights from same city
-- [ ] Flight duration validation (realistic times)
-- [ ] Seat capacity cannot exceed aircraft limits
-- [ ] Cannot delete flights with existing bookings
-- [ ] Past flights cannot be modified
-- [ ] Arrival time must be after departure time
-
-## 🚀 Deployment
-
-### Frontend (Netlify/Vercel)
-```bash
-cd frontend
-npm run build
-# Deploy dist folder
-```
-
-### Backend (Heroku/Railway)
-```bash
-# Add production environment variables
-# Deploy backend with database connection
-```
-
-### Environment Variables for Production
-```env
-NODE_ENV=production
-MONGODB_URI=your-production-mongodb-uri
-EMAIL_USER=your-production-email
-EMAIL_PASS=your-production-email-password
-```
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**MongoDB Connection Error**
-```bash
-# Check if MongoDB is running
-brew services start mongodb-community
-# or
-sudo service mongod start
-```
-
-**Port Already in Use**
-```bash
-# Kill process on port 3000 or 4000
-lsof -ti:3000 | xargs kill -9
-lsof -ti:4000 | xargs kill -9
-```
-
-**Email Not Sending**
-- Verify Gmail App Password is correct
-- Check 2-Step Verification is enabled
-- Ensure no spaces in app password
-
-**Seat Selection Not Working**
-- Check if flight has seats_available field
-- Verify seat_number is included in ticket model
-
-**Admin Login Issues**
-- Verify admin credentials in database
-- Check JWT token configuration
-- Ensure admin middleware is properly implemented
-
-**Flight Creation Conflicts**
-- Check duplicate flight validation
-- Verify departure/arrival time logic
-- Ensure city relationships are properly set
-
-**Business Rule Violations**
-```javascript
-// Example conflict check
-const existingFlight = await Flight.findOne({
-  from_city: flight.from_city,
-  departure_time: {
-    $gte: new Date(flight.departure_time - 60*60*1000), // 1 hour before
-    $lte: new Date(flight.departure_time + 60*60*1000)  // 1 hour after
-  }
-});
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 👥 Authors
 
-- **Your Name** - *Initial work* - [YourGitHub](https://github.com/yourusername)
+- **Beyza Evcen** - [YourGitHub](https://github.com/beyzaevcen)
 
-## 🙏 Acknowledgments
-
-- React.js team for the amazing framework
-- MongoDB team for the database solution
-- Bootstrap team for the UI components
-- Nodemailer for email functionality
-
----
-
-## 📞 Support
-
-For support, email support@flightbooking.com or create an issue in the GitHub repository.
-
-## 🔄 Version History
-
-- **v1.0.0** - Initial release with core booking functionality
-- **v1.1.0** - Added seat selection feature
-- **v1.2.0** - Implemented email notifications
-- **v1.3.0** - Enhanced responsive design
-- **v1.4.0** - Added admin panel with flight management
-- **v1.5.0** - Implemented business rules and conflict prevention
-- **v1.6.0** - Enhanced validation and error handling
-
----
 
 **Happy Flying! ✈️**
