@@ -197,7 +197,7 @@ npm run production
 
 ### Admin Panel Access
 ```
-Email: admin@flightbooking.com
+User: admin
 Password: admin123
 ```
 
@@ -219,37 +219,6 @@ Password: admin123
   - Update city information
   - Manage airport codes
 
-### Test User Accounts
-```
-Regular User:
-Email: user@example.com
-Password: user123
-
-Test User 2:
-Email: john.doe@email.com
-Password: password123
-```
-
-### Database Direct Access
-```bash
-# MongoDB local connection
-mongo mongodb://localhost:27017/flyticket
-
-# View collections
-show collections
-db.flights.find()
-db.tickets.find()
-db.cities.find()
-
-# Check flight conflicts
-db.flights.find({
-  "from_city": ObjectId("..."),
-  "departure_time": {
-    $gte: ISODate("2025-05-28T10:00:00Z"),
-    $lt: ISODate("2025-05-28T11:00:00Z")
-  }
-})
-```
 
 ## 🔗 API Endpoints
 
@@ -368,7 +337,7 @@ npm test
 
 ## 👥 Authors
 
-- **Beyza Evcen** - [YourGitHub](https://github.com/beyzaevcen)
+- **Beyza Evcen** - [beyzaevcen](https://github.com/beyzaevcen)
 
 
 **Happy Flying! ✈️**
